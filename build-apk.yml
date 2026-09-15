@@ -1,0 +1,36 @@
+name: Construire l'APK MEERA TV
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # On installe Gradle directement (au lieu d'utiliser ./gradlew) pour
+      # ne pas dépendre du fichier "wrapper" habituellement généré par
+      # Android Studio.
+      - name: Installer Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Construire l'APK (version debug, installable directement)
+        run: gradle assembleDebug
+
+      - name: Mettre l'APK à disposition en téléchargement
+        uses: actions/upload-artifact@v4
+        with:
+          name: MeeraTV-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
