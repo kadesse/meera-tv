@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "106262620648",
+    "project_id": "jks-application",
+    "storage_bucket": "jks-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106262620648:android:e17318ae040fe7443c5c5d",
+        "android_client_info": {
+          "package_name": "com.meera.tv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106262620648-9vj6lf6uhv6gq4qb97sdoj7okrg0cngl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUK7-KywK1rQXuw9drT-OY7xftGr6WH2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106262620648-9vj6lf6uhv6gq4qb97sdoj7okrg0cngl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
