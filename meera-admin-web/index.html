@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEERA TV — Administration</title>
+</head>
+
+<body>
+  <h1>MEERA TV</h1>
+  <h2>Administration</h2>
+
+  <form id="loginForm">
+    <label for="email">Adresse e-mail</label><br>
+    <input type="email" id="email" required><br><br>
+
+    <label for="password">Mot de passe</label><br>
+    <input type="password" id="password" required><br><br>
+
+    <button type="submit">Se connecter</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCe2NsSbrip-IF99Z1fMTkQQncSuKADMuw",
+      authDomain: "jks-application.firebaseapp.com",
+      projectId: "jks-application",
+      storageBucket: "jks-application.firebasestorage.app",
+      messagingSenderId: "106262620648",
+      appId: "1:106262620648:web:714ea73467d5ee553c5c5d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        message.textContent = "Connexion réussie.";
+      } catch (error) {
+        message.textContent = "Erreur : e-mail ou mot de passe incorrect.";
+      }
+    });
+  </script>
+</body>
+</html>
