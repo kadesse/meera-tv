@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.MeeraTV" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#0B1F3A</item>
+        <item name="android:windowBackground">#0A1626</item>
+    </style>
+</resources>

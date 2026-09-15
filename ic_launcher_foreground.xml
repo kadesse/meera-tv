@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Placeholder : remplacer par le vrai logo MEERA via Android Studio > New > Image Asset -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M54,30 L70,54 L54,78 L38,54 Z"/>
+</vector>
