@@ -1,0 +1,119 @@
+name: Synchronisation du direct YouTube MEERA TV
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  youtube-live-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Installer les dépendances
+        run: npm install googleapis firebase-admin
+
+      - name: Synchroniser le direct YouTube avec Firestore
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          cat > sync-live.js <<'EOF'
+          const { google } = require("googleapis");
+          const admin = require("firebase-admin");
+
+          async function main() {
+            const serviceAccount = JSON.parse(
+              process.env.FIREBASE_SERVICE_ACCOUNT
+            );
+
+            admin.initializeApp({
+              credential: admin.credential.cert(serviceAccount)
+            });
+
+            const db = admin.firestore();
+
+            const youtube = google.youtube({
+              version: "v3",
+              auth: process.env.YOUTUBE_API_KEY
+            });
+
+            const channelResponse = await youtube.channels.list({
+              part: ["id", "snippet"],
+              forHandle: "@MEERATV2"
+            });
+
+            if (!channelResponse.data.items?.length) {
+              throw new Error(
+                "Chaîne @MEERATV2 introuvable."
+              );
+            }
+
+            const channel = channelResponse.data.items[0];
+            const channelId = channel.id;
+
+            console.log(
+              "Chaîne trouvée :",
+              channel.snippet.title
+            );
+
+            const liveResponse = await youtube.search.list({
+              part: ["snippet"],
+              channelId: channelId,
+              eventType: "live",
+              type: ["video"],
+              maxResults: 1
+            });
+
+            const liveItems = liveResponse.data.items || [];
+
+            if (liveItems.length > 0) {
+              const live = liveItems[0];
+
+              const videoId = live.id.videoId;
+              const title =
+                live.snippet.title || "En direct";
+
+              console.log("🟢 DIRECT ACTIF");
+              console.log("Titre :", title);
+              console.log("Video ID :", videoId);
+
+              await db
+                .collection("config")
+                .doc("liveStatus")
+                .set({
+                  isLive: true,
+                  youtubeVideoId: videoId,
+                  title: title,
+                  channelId: channelId,
+                  updatedAt: new Date().toISOString()
+                });
+
+            } else {
+              console.log("🔴 Aucun direct actif.");
+
+              await db
+                .collection("config")
+                .doc("liveStatus")
+                .set({
+                  isLive: false,
+                  youtubeVideoId: "",
+                  title: "",
+                  channelId: channelId,
+                  updatedAt: new Date().toISOString()
+                });
+            }
+          }
+
+          main().catch((error) => {
+            console.error(error);
+            process.exit(1);
+          });
+          EOF
+
+          node sync-live.js
