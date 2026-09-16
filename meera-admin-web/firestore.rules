@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Un utilisateur est administrateur uniquement
+    // s'il possède un document dans /admins/{uid}.
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Contenu public : lecture autorisée à tous.
+    match /config/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /replays/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /programs/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /announcements/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Les visiteurs peuvent envoyer une demande de prière.
+    // Seul l'administrateur peut les lire, modifier ou supprimer.
+    match /prayerRequests/{document} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Les documents administrateurs ne sont jamais publics.
+    match /admins/{uid} {
+      allow read, write: if isAdmin() && request.auth.uid == uid;
+    }
+
+    // Tout le reste est interdit.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
