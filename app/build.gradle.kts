@@ -1,4 +1,4 @@
-
+﻿
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,6 +19,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
   composeOptions {
@@ -53,6 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:24.0.1")
     implementation("io.coil-kt:coil-compose:2.7.0")
 }
+
 
 
 

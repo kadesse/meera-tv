@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MeeraTvTheme {
-                MeeraTvApp()
+                MeeraTvNavigation()
             }
         }
     }
@@ -60,7 +60,7 @@ sealed class Screen(val route: String, val label: String) {
 val bottomNavItems = listOf(Screen.Home, Screen.Live, Screen.Replays, Screen.Programs, Screen.Sermons)
 
 @Composable
-fun MeeraTvApp() {
+fun MeeraTvNavigation() {
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
