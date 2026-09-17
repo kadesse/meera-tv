@@ -21,6 +21,10 @@ android {
         compose = true
     }
 
+  composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+ }
+
 compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -49,4 +53,6 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:24.0.1")
     implementation("io.coil-kt:coil-compose:2.7.0")
 }
+
+
 
