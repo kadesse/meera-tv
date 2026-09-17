@@ -27,7 +27,7 @@ import com.meera.tv.Screen
 import com.meera.tv.data.model.Replay
 import com.meera.tv.ui.theme.MeeraGold
 import com.meera.tv.ui.theme.MeeraLiveRed
-
+import com.meera.tv.R
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     val state by viewModel.uiState.collectAsState()
@@ -91,7 +91,15 @@ private fun MeeraHeader() {
             modifier = Modifier.size(40.dp).clip(CircleShape).background(MeeraGold),
             contentAlignment = Alignment.Center
         ) {
-            Text("M", color = Color.Black, fontWeight = FontWeight.Bold)
+            AsyncImage(
+    model = R.drawable.logo_meera,
+    contentDescription = "Logo MEERA TV",
+    contentScale = ContentScale.Crop,
+    modifier = Modifier
+        .size(50.dp)
+        .clip(CircleShape)
+)
+)
         }
         Spacer(Modifier.width(10.dp))
         Text("MEERA TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
