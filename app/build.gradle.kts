@@ -47,3 +47,4 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:24.0.1")
     implementation("io.coil-kt:coil-compose:2.7.0")
 }
+
