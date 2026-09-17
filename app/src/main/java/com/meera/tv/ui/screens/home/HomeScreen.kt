@@ -99,7 +99,7 @@ private fun MeeraHeader() {
         .size(50.dp)
         .clip(CircleShape)
 )
-)
+
         }
         Spacer(Modifier.width(10.dp))
         Text("MEERA TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
