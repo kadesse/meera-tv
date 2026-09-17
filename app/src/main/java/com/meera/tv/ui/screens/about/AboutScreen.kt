@@ -1,25 +1,74 @@
 package com.meera.tv.ui.screens.about
 
-import androidx.compose.foundation.layout.*
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.meera.tv.BuildConfig
 
 @Composable
 fun AboutScreen() {
-    Column(Modifier.fillMaxSize().padding(20.dp)) {
-        Text("À propos de MEERA TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(16.dp))
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
         Text(
-            "MEERA TV est la plateforme de télévision chrétienne numérique du " +
-                "Ministère Évangélique Ébénézer pour la Restauration des Âmes (MEERA). " +
-                "Elle diffuse des cultes, prédications, enseignements et émissions en direct et en replay."
+            text = "MEERA TV",
+            style = MaterialTheme.typography.headlineMedium
         )
-        Spacer(Modifier.height(16.dp))
-        Text("Version de l'application : ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodySmall)
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "Ministère Évangélique Ébénézer pour la Restauration des Âmes"
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Ebenezer confiance"
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Retrouvez-nous sur YouTube, Facebook et TikTok."
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.youtube.com/@MEERATV2")
+                )
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("YouTube MEERA TV")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "Culte de feu : vendredi à 19h\nCulte dominical : dimanche à 08h"
+        )
     }
 }
