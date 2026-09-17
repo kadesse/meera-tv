@@ -1,0 +1,21 @@
+{
+  "name": "meera-admin-web",
+  "version": "1.0.0",
+  "description": "Interface d’administration séparée de l’application Android publique MEERA TV.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^12.19.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}
