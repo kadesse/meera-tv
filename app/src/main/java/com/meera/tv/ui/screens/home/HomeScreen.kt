@@ -33,7 +33,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
     val state by viewModel.uiState.collectAsState()
 
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        item { MeeraHeader() }
+        item { MeeraHeader(navController) }
         item { Spacer(Modifier.height(16.dp)) }
 
         item {
@@ -84,7 +84,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
 }
 
 @Composable
-private fun MeeraHeader() {
+private fun MeeraHeader(navController: NavHostController) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         // Emplacement réservé au logo MEERA (voir /app/src/main/res/drawable/logo_meera.xml)
         Box(
@@ -102,7 +102,20 @@ private fun MeeraHeader() {
 
         }
         Spacer(Modifier.width(10.dp))
-        Text("MEERA TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(
+    text = "MEERA TV",
+    style = MaterialTheme.typography.headlineSmall,
+    fontWeight = FontWeight.Bold,
+    modifier = Modifier.weight(1f)
+)
+IconButton(
+    onClick = { navController.navigate(Screen.About.route) }
+) {
+    Icon(
+        imageVector = Icons.Default.Menu,
+        contentDescription = "Menu"
+    )
+}
     }
 }
 
