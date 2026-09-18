@@ -25,12 +25,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
+      - name: Construire l'APK et le AAB
+        run: gradle assembleDebug bundleRelease
 
-      - name: Construire l'APK (version debug, installable directement)
-        run: gradle assembleDebug
-
-      - name: Mettre l'APK à disposition en téléchargement
+      - name: Mettre les fichiers à disposition
         uses: actions/upload-artifact@v4
         with:
-          name: MeeraTV-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: MeeraTV-build
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/bundle/release/app-release.aab
