@@ -22,15 +22,15 @@ class MeeraTvApp : Application() {
 
             val liveChannel = NotificationChannel(
                 CHANNEL_LIVE,
-                "Direct MEERA TV",
+                "Direct J-C TV",
                 NotificationManager.IMPORTANCE_HIGH
-            ).apply { description = "Alertes quand MEERA TV est en direct" }
+            ).apply { description = "Alertes quand J-C TV est en direct" }
 
             val generalChannel = NotificationChannel(
                 CHANNEL_GENERAL,
                 "Annonces & Programmes",
                 NotificationManager.IMPORTANCE_DEFAULT
-            ).apply { description = "Programmes, replays et annonces MEERA TV" }
+            ).apply { description = "Programmes, replays et annonces J-C TV" }
 
             manager.createNotificationChannel(liveChannel)
             manager.createNotificationChannel(generalChannel)
@@ -43,3 +43,4 @@ class MeeraTvApp : Application() {
         const val TOPIC_ALL = "meera_all"
     }
 }
+

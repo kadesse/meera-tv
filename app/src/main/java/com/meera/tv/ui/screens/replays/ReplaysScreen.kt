@@ -25,7 +25,7 @@ private val categoryLabels = mapOf(
     VideoCategory.ENSEIGNEMENTS to "Enseignements",
     VideoCategory.TEMOIGNAGES to "Témoignages",
     VideoCategory.EVANGELISATION to "Évangélisation",
-    VideoCategory.EMISSIONS to "Émissions MEERA TV"
+    VideoCategory.EMISSIONS to "Émissions J-C TV"
 )
 
 @Composable
@@ -88,3 +88,4 @@ private fun ReplayRow(replay: Replay, onClick: () -> Unit) {
         }
     }
 }
+

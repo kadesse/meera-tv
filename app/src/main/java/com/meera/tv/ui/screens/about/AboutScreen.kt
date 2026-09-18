@@ -28,7 +28,7 @@ fun AboutScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "MEERA TV",
+            text = "J-C TV",
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -62,7 +62,7 @@ fun AboutScreen() {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("YouTube MEERA TV")
+            Text("YouTube J-C TV")
         }
 
         Spacer(modifier = Modifier.height(12.dp))

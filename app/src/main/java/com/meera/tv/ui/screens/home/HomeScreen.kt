@@ -94,7 +94,7 @@ private fun MeeraHeader(navController: NavHostController) {
         ) {
             AsyncImage(
     model = R.drawable.logo_meera,
-    contentDescription = "Logo MEERA TV",
+    contentDescription = "Logo J-C TV",
     contentScale = ContentScale.Crop,
     modifier = Modifier
         .size(50.dp)
@@ -168,3 +168,4 @@ private fun ReplayCard(replay: Replay, onClick: () -> Unit) {
         Text(replay.title, maxLines = 2, style = MaterialTheme.typography.bodySmall)
     }
 }
+

@@ -19,7 +19,7 @@ class MeeraMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        val title = message.notification?.title ?: message.data["title"] ?: "MEERA TV"
+        val title = message.notification?.title ?: message.data["title"] ?: "J-C TV"
         val body = message.notification?.body ?: message.data["body"] ?: ""
         val type = message.data["type"] ?: "ANNOUNCEMENT"
 
@@ -41,3 +41,4 @@ class MeeraMessagingService : FirebaseMessagingService() {
         NotificationManagerCompat.from(this).notify(System.currentTimeMillis().toInt(), notification)
     }
 }
+

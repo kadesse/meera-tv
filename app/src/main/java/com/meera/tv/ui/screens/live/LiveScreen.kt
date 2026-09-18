@@ -15,7 +15,7 @@ import kotlinx.coroutines.delay
 /**
  * Écran "Direct". Le statut (isLive + ID de la vidéo YouTube) est mis à jour
  * manuellement par l'admin quand un direct commence sur la chaîne YouTube
- * MEERA TV — on relit Firestore toutes les 20s pour rester à jour.
+ * J-C TV — on relit Firestore toutes les 20s pour rester à jour.
  */
 @Composable
 fun LiveScreen(repository: MeeraRepository = MeeraRepository()) {
@@ -33,7 +33,7 @@ fun LiveScreen(repository: MeeraRepository = MeeraRepository()) {
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Direct MEERA TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text("Direct J-C TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
 
         when {
@@ -57,3 +57,4 @@ fun LiveScreen(repository: MeeraRepository = MeeraRepository()) {
         }
     }
 }
+
