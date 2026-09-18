@@ -1,5 +1,9 @@
 package com.meera.tv.ui.screens.home
 
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.meera.tv.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -103,11 +107,13 @@ private fun MeeraHeader(navController: NavHostController) {
 
         }
         Spacer(Modifier.width(10.dp))
-        Text(
-    text = "J-C TV",
-    style = MaterialTheme.typography.headlineSmall,
-    fontWeight = FontWeight.Bold,
-    modifier = Modifier.weight(1f)
+       Image(
+    painter = painterResource(id = R.drawable.jc_tv_logo),
+    contentDescription = "J-C TV",
+    modifier = Modifier
+        .height(55.dp)
+        .weight(1f),
+    contentScale = ContentScale.Fit
 )
 IconButton(
     onClick = { navController.navigate(Screen.About.route) }
