@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v4
@@ -18,15 +19,25 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # On installe Gradle directement (au lieu d'utiliser ./gradlew) pour
-      # ne pas dépendre du fichier "wrapper" habituellement généré par
-      # Android Studio.
       - name: Installer Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
+
+      - name: Restaurer le keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > meera-tv-release.jks
+
       - name: Construire l'APK et le AAB
-        run: gradle assembleDebug bundleRelease
+        env:
+          KEYSTORE_FILE: ${{ github.workspace }}/meera-tv-release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          gradle assembleDebug bundleRelease
 
       - name: Mettre les fichiers à disposition
         uses: actions/upload-artifact@v4
