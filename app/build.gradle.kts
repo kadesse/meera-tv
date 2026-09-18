@@ -7,6 +7,17 @@ plugins {
 
 android {
     namespace = "com.meera.tv"
+    signingConfigs {
+        create("release") {
+            val keystoreFile = System.getenv("KEYSTORE_FILE")
+            if (keystoreFile != null) {
+                storeFile = file(keystoreFile)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
     compileSdk = 35
 
     defaultConfig {
@@ -35,7 +46,13 @@ compileOptions {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
 }
+
 
 dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))

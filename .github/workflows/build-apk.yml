@@ -32,12 +32,24 @@ jobs:
 
       - name: Construire l'APK et le AAB
         env:
+                - name: Vérifier le keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          keytool -list \
+            -keystore meera-tv-release.jks \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS"
+
+      - name: Construire l'APK et le AAB
+        env:
           KEYSTORE_FILE: ${{ github.workspace }}/meera-tv-release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          gradle assembleDebug bundleRelease
+          gradle clean assembleDebug bundleRelease
 
       - name: Mettre les fichiers à disposition
         uses: actions/upload-artifact@v4
