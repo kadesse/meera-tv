@@ -104,7 +104,7 @@ private fun MeeraHeader(navController: NavHostController) {
         }
         Spacer(Modifier.width(10.dp))
         Text(
-    text = "MEERA TV",
+    text = "J-C TV",
     style = MaterialTheme.typography.headlineSmall,
     fontWeight = FontWeight.Bold,
     modifier = Modifier.weight(1f)
