@@ -1,12 +1,9 @@
-package com.meera.tv 
+package com.meera.tv
 
-import android.os.Bundle
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import com.meera.tv.update.UpdateChecker
-import kotlinx.coroutines.launch
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,43 +29,48 @@ import com.meera.tv.ui.screens.replays.ReplaysScreen
 import com.meera.tv.ui.screens.sermons.SermonsScreen
 import com.meera.tv.ui.screens.word.WordOfGodScreen
 import com.meera.tv.ui.theme.MeeraTvTheme
+import com.meera.tv.update.UpdateChecker
+import kotlinx.coroutines.launch
 
-/**
- * Point d'entrée de l'application PUBLIQUE J-C TV.
- * Aucune route d'administration n'existe ici — voir le site "J-C TV ADMIN" séparé.
- */
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-      setContent {
-    MeeraTvTheme {
-        MeeraTvNavigation()
+
+        setContent {
+            MeeraTvTheme {
+                MeeraTvNavigation()
+            }
+        }
+
+        lifecycleScope.launch {
+            val update = UpdateChecker.check()
+
+            if (update != null) {
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Nouvelle version J-C TV ${update.versionName} disponible",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(update.apkUrl)
+                        )
+                    )
+                }
+            }
+        }
     }
 }
 
-lifecycleScope.launch {
-    val update = UpdateChecker.check()
-
-    if (update != null) {
-        runOnUiThread {
-            Toast.makeText(
-                this@MainActivity,
-                "Nouvelle version J-C TV ${update.versionName} disponible",
-                Toast.LENGTH_LONG
-            ).show()
-
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(update.apkUrl)
-                )
-           )
-    }
-}
-}
-
-sealed class Screen(val route: String, val label: String) {
+sealed class Screen(
+    val route: String,
+    val label: String
+) {
     data object Home : Screen("home", "Accueil")
     data object Live : Screen("live", "Direct")
     data object Replays : Screen("replays", "Replays")
@@ -81,35 +84,76 @@ sealed class Screen(val route: String, val label: String) {
     data object Contact : Screen("contact", "Contact")
 }
 
-// Onglets affichés dans la barre de navigation inférieure
-val bottomNavItems = listOf(Screen.Home, Screen.Live, Screen.Replays, Screen.Programs, Screen.Sermons)
+val bottomNavItems = listOf(
+    Screen.Home,
+    Screen.Live,
+    Screen.Replays,
+    Screen.Programs,
+    Screen.Sermons
+)
 
 @Composable
 fun MeeraTvNavigation() {
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
-        bottomBar = { MeeraBottomBar(navController) }
+        bottomBar = {
+            MeeraBottomBar(navController)
+        }
     ) { innerPadding ->
+
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) { HomeScreen(navController) }
-            composable(Screen.Live.route) { LiveScreen() }
-            composable(Screen.Replays.route) { ReplaysScreen(navController) }
+
+            composable(Screen.Home.route) {
+                HomeScreen(navController)
+            }
+
+            composable(Screen.Live.route) {
+                LiveScreen()
+            }
+
+            composable(Screen.Replays.route) {
+                ReplaysScreen(navController)
+            }
+
             composable(Screen.ReplayDetail.route) { backStackEntry ->
-                val videoId = backStackEntry.arguments?.getString("videoId") ?: ""
+                val videoId =
+                    backStackEntry.arguments?.getString("videoId") ?: ""
+
                 ReplayDetailScreen(videoId)
             }
-            composable(Screen.Programs.route) { ProgramsScreen() }
-            composable(Screen.Sermons.route) { SermonsScreen(navController) }
-            composable(Screen.Prayer.route) { PrayerScreen() }
-            composable(Screen.WordOfGod.route) { WordOfGodScreen() }
-            composable(Screen.Notifications.route) { NotificationsScreen() }
-            composable(Screen.About.route) { AboutScreen() }
-            composable(Screen.Contact.route) { ContactScreen() }
+
+            composable(Screen.Programs.route) {
+                ProgramsScreen()
+            }
+
+            composable(Screen.Sermons.route) {
+                SermonsScreen(navController)
+            }
+
+            composable(Screen.Prayer.route) {
+                PrayerScreen()
+            }
+
+            composable(Screen.WordOfGod.route) {
+                WordOfGodScreen()
+            }
+
+            composable(Screen.Notifications.route) {
+                NotificationsScreen()
+            }
+
+            composable(Screen.About.route) {
+                AboutScreen()
+            }
+
+            composable(Screen.Contact.route) {
+                ContactScreen()
+            }
         }
     }
 }
