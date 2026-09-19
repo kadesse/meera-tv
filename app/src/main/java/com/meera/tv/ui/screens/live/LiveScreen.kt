@@ -12,49 +12,106 @@ import com.meera.tv.data.repository.MeeraRepository
 import com.meera.tv.player.YouTubePlayer
 import kotlinx.coroutines.delay
 
-/**
- * Écran "Direct". Le statut (isLive + ID de la vidéo YouTube) est mis à jour
- * manuellement par l'admin quand un direct commence sur la chaîne YouTube
- * J-C TV — on relit Firestore toutes les 20s pour rester à jour.
- */
 @Composable
 fun LiveScreen(repository: MeeraRepository = MeeraRepository()) {
     var status by remember { mutableStateOf(LiveStatus()) }
     var loading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         while (true) {
-            runCatching { repository.getLiveStatus() }.onSuccess {
-                status = it
+            try {
+                val result = repository.getLiveStatus()
+                status = result
+                errorMessage = null
+            } catch (e: Exception) {
+                errorMessage = e.message ?: e.javaClass.simpleName
+            } finally {
                 loading = false
             }
+
             delay(20_000)
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Direct J-C TV", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            "Direct J-C TV",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+
         Spacer(Modifier.height(16.dp))
 
         when {
-            loading -> Box(Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+            loading -> {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
+
+            errorMessage != null -> {
+                Card(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        Modifier.padding(20.dp)
+                    ) {
+                        Text(
+                            "Erreur de connexion Firestore",
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(Modifier.height(8.dp))
+
+                        Text(errorMessage ?: "Erreur inconnue")
+                    }
+                }
+            }
+
             status.isLive && !status.youtubeVideoId.isNullOrBlank() -> {
-                YouTubePlayer(videoId = status.youtubeVideoId!!)
+                YouTubePlayer(
+                    videoId = status.youtubeVideoId!!
+                )
+
                 Spacer(Modifier.height(12.dp))
-                Text(status.title ?: "En direct", fontWeight = FontWeight.Bold)
+
+                Text(
+                    status.title ?: "En direct",
+                    fontWeight = FontWeight.Bold
+                )
             }
+
             else -> {
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Aucun direct en ce moment", fontWeight = FontWeight.Bold)
+                Card(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        Modifier.padding(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            "Aucun direct en ce moment",
+                            fontWeight = FontWeight.Bold
+                        )
+
                         Spacer(Modifier.height(6.dp))
-                        Text("Consultez l'onglet Programmes pour connaître les prochains horaires de diffusion.")
+
+                        Text(
+                            "Consultez l'onglet Programmes pour connaître les prochains horaires de diffusion."
+                        )
                     }
                 }
             }
         }
     }
 }
-
