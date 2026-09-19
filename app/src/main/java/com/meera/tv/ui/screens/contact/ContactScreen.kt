@@ -11,13 +11,22 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ContactScreen() {
     Column(Modifier.fillMaxSize().padding(20.dp)) {
-        Text("Contact", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(
+            "Contact",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+
         Spacer(Modifier.height(16.dp))
-        // Coordonnées gérables depuis l'admin plus tard (endpoint /api/settings)
-        Text("📞 Téléphone : à renseigner dans l'admin")
+
+        Text("📞 Téléphone : +225 05 01 96 56 57")
+
         Spacer(Modifier.height(8.dp))
-        Text("✉️ E-mail : à renseigner dans l'admin")
+
+        Text("✉️ E-mail : kadesse3@gmail.com")
+
         Spacer(Modifier.height(8.dp))
-        Text("📍 Adresse : à renseigner dans l'admin")
+
+        Text("📍 Ebimpé, Anyama, Côte d’Ivoire")
     }
 }

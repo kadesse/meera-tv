@@ -1,4 +1,4 @@
-package com.meera.tv
+package com.meera.tv 
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -27,8 +27,8 @@ import com.meera.tv.ui.screens.word.WordOfGodScreen
 import com.meera.tv.ui.theme.MeeraTvTheme
 
 /**
- * Point d'entrée de l'application PUBLIQUE MEERA TV.
- * Aucune route d'administration n'existe ici — voir le site "MEERA TV ADMIN" séparé.
+ * Point d'entrée de l'application PUBLIQUE J-C TV.
+ * Aucune route d'administration n'existe ici — voir le site "J-C TV ADMIN" séparé.
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

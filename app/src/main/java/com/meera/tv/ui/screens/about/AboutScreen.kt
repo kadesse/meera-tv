@@ -50,6 +50,16 @@ fun AboutScreen() {
             text = "Retrouvez-nous sur YouTube, Facebook et TikTok."
         )
 
+Spacer(modifier = Modifier.height(12.dp))
+
+Text(
+    text = "📧 kadesse3@gmail.com"
+)
+
+Text(
+    text = "📞 +225 05 01 96 56 57"
+)
+
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
