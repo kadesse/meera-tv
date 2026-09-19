@@ -62,9 +62,9 @@ lifecycleScope.launch {
                     Intent.ACTION_VIEW,
                     Uri.parse(update.apkUrl)
                 )
-            )
-        }
+           )
     }
+}
 }
 
 sealed class Screen(val route: String, val label: String) {
