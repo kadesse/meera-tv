@@ -1,6 +1,12 @@
 package com.meera.tv 
 
 import android.os.Bundle
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.meera.tv.update.UpdateChecker
+import kotlinx.coroutines.launch
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -34,14 +40,32 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            MeeraTvTheme {
-                MeeraTvNavigation()
-            }
-        }
+      setContent {
+    MeeraTvTheme {
+        MeeraTvNavigation()
     }
 }
 
+lifecycleScope.launch {
+    val update = UpdateChecker.check()
+
+    if (update != null) {
+        runOnUiThread {
+            Toast.makeText(
+                this@MainActivity,
+                "Nouvelle version J-C TV ${update.versionName} disponible",
+                Toast.LENGTH_LONG
+            ).show()
+
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(update.apkUrl)
+                )
+            )
+        }
+    }
+}
 sealed class Screen(val route: String, val label: String) {
     data object Home : Screen("home", "Accueil")
     data object Live : Screen("live", "Direct")
