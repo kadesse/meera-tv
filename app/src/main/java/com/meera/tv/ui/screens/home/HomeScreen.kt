@@ -39,14 +39,13 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
         item { MeeraHeader(navController) }
         item { Spacer(Modifier.height(16.dp)) }
 
-        item {
-            LiveBanner(
-                isLive = state.liveStatus.isLive,
-                title = state.liveStatus.title,
-                onClick = { navController.navigate(Screen.Live.route) }
-            )
-        }
-
+       item {
+    LiveBanner(
+        isLive = state.liveStatus.isLive,
+        title = state.liveStatus.title,
+        onClick = { navController.navigate(Screen.Live.route) }
+    )
+}
         item { Spacer(Modifier.height(20.dp)) }
 
         item {
@@ -125,32 +124,76 @@ IconButton(
 }
 
 @Composable
-private fun LiveBanner(isLive: Boolean, title: String?, onClick: () -> Unit) {
+private fun LiveBanner(
+    isLive: Boolean,
+    title: String?,
+    onClick: () -> Unit
+) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(enabled = isLive, onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = if (isLive) MeeraLiveRed else MaterialTheme.colorScheme.surface),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = isLive, onClick = onClick),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isLive)
+                MeeraLiveRed
+            else
+                MaterialTheme.colorScheme.surface
+        ),
         shape = RoundedCornerShape(14.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(Icons.Filled.PlayArrow, contentDescription = null, tint = if (isLive) Color.White else MeeraGold)
-            Spacer(Modifier.width(10.dp))
-            Column {
-                Text(
-                    if (isLive) "🔴 EN DIRECT" else "Pas de direct actuellement",
-                    color = if (isLive) Color.White else MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                if (isLive && title != null) {
-                    Text(title, color = Color.White.copy(alpha = 0.9f), style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = if (isLive) "🔴 EN DIRECT" else "📺 J-C TV",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = if (isLive)
+                    Color.White
+                else
+                    MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacer(Modifier.height(6.dp))
+
+            Text(
+                text = if (isLive)
+                    (title ?: "J-C TV — Direct")
+                else
+                    "Aucun direct actuellement",
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (isLive)
+                    Color.White.copy(alpha = 0.9f)
+                else
+                    MaterialTheme.colorScheme.onSurface
+            )
+
+            if (isLive) {
+                Spacer(Modifier.height(14.dp))
+
+                Button(
+                    onClick = onClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.PlayArrow,
+                        contentDescription = null
+                    )
+
+                    Spacer(Modifier.width(8.dp))
+
+                    Text(
+                        text = "REGARDER LE DIRECT",
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
     }
 }
-
 @Composable
 private fun ProgramRow(label: String, title: String) {
     Row {
