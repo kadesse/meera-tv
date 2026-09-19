@@ -24,8 +24,8 @@ android {
         applicationId = "com.meera.tv"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 213
+        versionName = "2.1.3"
     }
 
     buildFeatures {
