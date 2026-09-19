@@ -110,23 +110,41 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
         }
 
         item { Spacer(Modifier.height(20.dp)) }
-        item {
-            Text("Derniers replays", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(8.dp))
+       item {
+    Text(
+        "🎬 DERNIERS REPLAYS",
+        style = MaterialTheme.typography.titleLarge,
+        fontWeight = FontWeight.Bold
+    )
+
+    Spacer(Modifier.height(10.dp))
+
+    if (state.latestReplays.isEmpty()) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(14.dp)
+        ) {
+            Text(
+                "Aucun replay disponible pour le moment.",
+                modifier = Modifier.padding(16.dp)
+            )
         }
-        item {
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(state.latestReplays) { replay ->
-                    ReplayCard(replay) {
-                        navController.navigate("replay_detail/${replay.id}")
-                    }
+    } else {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(state.latestReplays) { replay ->
+                ReplayCard(replay) {
+                    navController.navigate("replay_detail/${replay.id}")
                 }
             }
         }
-        item { Spacer(Modifier.height(24.dp)) }
     }
 }
 
+item {
+    Spacer(Modifier.height(24.dp))
+}
 @Composable
 private fun MeeraHeader(navController: NavHostController) {
     Row(verticalAlignment = Alignment.CenterVertically) {
