@@ -49,13 +49,55 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
         item { Spacer(Modifier.height(20.dp)) }
 
         item {
-            Text("Programmes", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(8.dp))
-            ProgramRow(label = "EN COURS", title = state.currentProgram?.title ?: "Aucun programme en cours")
-            Spacer(Modifier.height(6.dp))
-            ProgramRow(label = "PROCHAIN", title = state.nextProgram?.title ?: "À venir")
-        }
+    Text(
+        "📅 PROGRAMMES",
+        style = MaterialTheme.typography.titleLarge,
+        fontWeight = FontWeight.Bold
+    )
 
+    Spacer(Modifier.height(10.dp))
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(14.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                "🔴 EN COURS",
+                color = MeeraLiveRed,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(Modifier.height(4.dp))
+
+            Text(
+                state.currentProgram?.title ?: "Aucun programme en cours",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(Modifier.height(14.dp))
+
+            Text(
+                "⏭ PROCHAIN",
+                color = MeeraGold,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(Modifier.height(4.dp))
+
+            Text(
+                state.nextProgram?.title ?: "À venir",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+    }
+}
         if (state.announcements.isNotEmpty()) {
             item { Spacer(Modifier.height(20.dp)) }
             item {
