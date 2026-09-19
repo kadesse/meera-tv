@@ -144,7 +144,12 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = andr
 
 item {
     Spacer(Modifier.height(24.dp))
+ }
+
+    }
+
 }
+
 @Composable
 private fun MeeraHeader(navController: NavHostController) {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -255,7 +260,7 @@ private fun LiveBanner(
     }
 }
 @Composable
-private fun ProgramRow(label: String, title: String) {
+private fun ProgramRow(label: String, title: String) { Spacer(Modifier.height(24.dp))
     Row {
         Text("$label · ", fontWeight = FontWeight.Bold, color = MeeraGold)
         Text(title)
