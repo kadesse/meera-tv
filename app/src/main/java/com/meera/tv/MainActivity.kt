@@ -66,6 +66,7 @@ lifecycleScope.launch {
         }
     }
 }
+
 sealed class Screen(val route: String, val label: String) {
     data object Home : Screen("home", "Accueil")
     data object Live : Screen("live", "Direct")
