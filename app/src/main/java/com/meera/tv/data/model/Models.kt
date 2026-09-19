@@ -5,11 +5,6 @@ package com.meera.tv.data.model
  * document "liveStatus") et mis à jour manuellement depuis l'admin quand
  * un direct YouTube commence/se termine.
  */
-data class LiveStatus(
-    val isLive: Boolean = false,
-    val title: String? = null,
-    val youtubeVideoId: String? = null // ID de la vidéo/direct YouTube (ex. "dQw4w9WgXcQ")
-)
 
 enum class VideoCategory {
     CULTES, PREDICATIONS, PRIERES, ENSEIGNEMENTS, TEMOIGNAGES, EVANGELISATION, EMISSIONS
